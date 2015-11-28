@@ -268,6 +268,14 @@ m.module = function(module){
 	*/
 	for (var i=0;i<module.param.length;++i){
 		var param = module.param[i];
+		//Validate param.conform
+		m.m.helper.validate({
+							val : param.conform,
+							type : [
+									'undefined', 
+									'string'
+									]
+							});		
 
 		//Validate param.type OR param.invalidType
 		m.m.helper.validate({
