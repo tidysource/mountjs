@@ -169,13 +169,8 @@ m.module = function(module){
 	Validate and conform module
 	---------------------------
 	*/
-	//Validate module object
 	m.m.helper.validate({val : module, type : 'object'});
-	
-	//Validate module.name
 	m.m.helper.validate({val : module.name, type : 'string'});
-	
-	//Validate and conform module.path
 	m.m.helper.validate({val : module.path, type : 'string'});
 	if (/[^A-z0-9.]/.test(module.path)){
 		//Must be only letters, numbers and .
@@ -188,12 +183,8 @@ m.module = function(module){
 	if (module.path[0] === '.'){
 		module.path = module.path.slice(1);
 	}
-	
-	//Validate and conform module.param
 	m.m.helper.validate({val : module.param, type : ['object','array']});
 	module.param = m.m.helper.conform({val : module.param, type : 'array'});
-
-	//Validate module.func
 	m.m.helper.validate({val : module.func, type : 'function'});
 	
 	/*
