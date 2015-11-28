@@ -217,7 +217,6 @@ m.module = function(module){
 	(in that case they also share the same
 	proto object).
 	*/
-	
 	var ref = m;
 	var path = module.path.split('.');
 		//validate path <---- validate and conform path
