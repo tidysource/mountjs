@@ -166,10 +166,16 @@ Core functions
 */
 m.module = function(module){
 	/*
-	Validate module
-	---------------
+	Validate and conform module
+	---------------------------
 	*/
-	//<--- add validation & conform module params
+	m.m.helper.validate({val : module, type : 'object'});
+	m.m.helper.validate({val : module.name, type : 'string'});
+	m.m.helper.validate({val : module.path, type : 'string'});
+	m.m.helper.validate({val : module.param, type : ['object','array']});
+	m.m.helper.validate({val : module.func, type : 'function'});
+	
+	module.param = m.m.helper.conform({val : module.param, type : 'array'});
 	
 	/*
 	Build reference to specified path
