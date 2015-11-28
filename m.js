@@ -326,7 +326,7 @@ m.module = function(module){
 				param.auto = m.m.helper.conform({
 													val : param.auto,
 													type : param.conform 
-													})
+													});
 			}
 		}
 		
