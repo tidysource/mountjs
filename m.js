@@ -17,6 +17,11 @@ m.module = function(module){
 	reference under path of the module, e.g.:
 	module.path = 'foo.bar' ---> m.foo.bar
 	var ref === m.foo.bar
+	
+	IMPORTANT:
+	Multiple modules can share the same path
+	(in that case they also share the same
+	proto object).
 	*/
 	
 	var ref = m;
@@ -105,7 +110,7 @@ m.module = function(module){
 					//Validate value to be set
 					if (typeof param.type !== 'undefined'){
 						for (var j=0;j<param.type.length;++j){
-							
+							//<--- validate
 						}
 					}
 
