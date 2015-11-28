@@ -160,9 +160,10 @@ m.module = function(module){
 	-----------------
 	
 	Whatever the module does is the action function.
-	Action method is a function that performs the action
-	it calls the function supplied via module.func, e.g.:
-	m.param1().param2.doSomething(); <--- doSomething()
+	Action method is a function that performs the action.
+	It calls the function supplied via module.func, e.g.:
+	//module.func === doSomething()
+	m.param1().param2.doSomething(); 
 	*/
 	if (typeof ref[module.name] === 'undefined'){
 		protoObj[module.name] = function(){
