@@ -354,8 +354,8 @@ m.module = function(module){
 					}
 					
 					//Conform value 
-					if (typeof param.conform === 'string'){
-						//<--- check if val can be conformed to conform value
+					if (typeof param.conform !== 'undefined'){
+						val = m.m.helper.conform({val : val, type : param.conform});
 					}
 					
 					//Set value;
