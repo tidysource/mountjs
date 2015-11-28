@@ -2,6 +2,168 @@
 
 var m = {};
 
+/*
+Helper functions
+================
+*/
+m.m = { helper : {} };
+
+m.m.helper.type = function(val){
+	/*
+	Same as typeof but returns "regex" for regular rexpression, 
+	"array" for array, "null" for null and "arguments" for arguments, 
+	the native JS object.
+	
+	@val - variable of which to return type
+	*/
+	
+	//Regex
+	if (val instanceof RegExp){
+		return 'regex';
+	}
+	
+	var type = typeof val
+	if (type === "object"){
+
+		//See if null
+		if (val === null){
+			return "null";				
+		}
+		//See if array
+		else if (Array.isArray){
+			if (Array.isArray(val)){
+				return "array";
+			}
+			else{
+				return "object"; 
+			}
+		}
+		else if (Object.prototype.toString.call(val) === "[object Array]"){
+			return "array";
+		}
+		//See if arguments (native JS object)
+		else if (Object.prototype.toString.call(val) === "[object Arguments]"){
+			return "arguments";
+		}
+		else{
+		//Any other object
+			return "object";
+		}
+	}
+	else{
+		return type;
+	}
+};
+
+m.m.helper.validate = function(param){
+	/*
+	Requires : m.m.helper.type
+		
+	@param.val - value
+	@param.type - valid types 
+	*/
+	//Validate param object
+	if (typeof param !== 'object'){
+		throw new Error("Invalid param.");
+	}
+	
+	var validTypes = []; 
+	
+	//Validate and conform validTypes
+	if (typeof param.type === 'string'){
+		validTypes = [param.type]; 
+	}
+	else if (m.m.helper.type(param.type) === 'array'){
+		validTypes = param.type;
+	}
+	else{
+		throw new Error("Invalid param.");
+	}
+
+	//See if type is among valid types	
+	var valType = m.m.helper.type(param.val);
+	if (validTypes.indexOf(valType) === -1){
+		throw new Error('Invalid type.');
+	}
+};
+
+m.m.helper.invalidate = function(param){
+	/*
+	Requires : m.m.helper.type
+		
+	@param.val - value
+	@param.type - invalid types 
+	*/
+	//Validate param object
+	if (typeof param !== 'object'){
+		throw new Error("Invalid param.");
+	}
+	
+	//Validate and conform invalidTypes
+	var invalidTypes = []; 
+	if (typeof param.type === 'string'){
+		invalidTypes = [param.type]; 
+	}
+	else if (m.m.helper.type(param.type) === 'array'){
+		invalidTypes = param.type;
+	}
+	else{
+		throw new Error("Invalid param.");
+	}
+
+	//See if type is among invalid types	
+	var valType = m.m.helper.type(param.val);
+	if (invalidTypes.indexOf(valType) !== -1){
+		throw new Error('Invalid type.');
+	}
+};
+
+m.m.helper.conform = function(param){
+	/*
+	Requires : 
+	- m.m.helper.type
+	- m.m.helper.validate
+	
+	@param.val - variable to be conformed
+	@param.type - type to conform param.val to
+	*/	
+	
+	/*
+	Validate param & param.type 
+	(param.val can be any type)
+	*/
+	m.m.helper.validate({
+						val : param, 
+						type : 'object'
+						});
+	m.m.helper.validate({
+						val : param.type, 
+						type : 'string'
+						});
+	
+	//Return conformed value
+	//if conform type is 'array'
+	if (param.type === 'array'){
+		var valType = m.m.helper.type(param.val);
+		if (valType === 'array'){
+			return param.val;
+		}
+		else if (valType === 'undefined'){
+			return [];
+		}
+		else{
+			return [param.val];
+		}
+	}
+	else{
+		throw new Error('Unsupported type');
+	}
+}
+
+/*
+Core functions
+==============
+*/
 m.module = function(module){
 	/*
 	Validate module
