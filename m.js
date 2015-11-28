@@ -120,7 +120,7 @@ m.module = function(module){
 					/*
 					Check if a new instance should be created
 					
-					Note:
+					NOTE:
 					A new instance is needed the first time 
 					a property method is called.
 					*/
@@ -157,4 +157,78 @@ m.module = function(module){
 	it calls the function supplied via module.func, e.g.:
 	m.param1().param2.doSomething(); <--- doSomething()
 	*/
+	if (typeof ref[module.name] === 'undefined'){
+		protoObj[module.name] = function(){
+			var inst = this;
+			
+			/*
+			Check if a new instance should be created
+			
+			NOTE:
+			A new instance is needed the first time 
+			an action method is called and no property
+			method was called before it.
+			*/
+			if (typeof this.m.args === 'undefined'){
+				inst = Object.create(this);
+				inst.m.args = {};
+			}
+			
+			//<---Handle shorthand (validate and set shorthand, just use property methods)
+			 
+			/*
+			NOTE:
+			We don't pass arguments from shorthand, 
+			we instead use inst.argName() as setter
+			or getter. That is, we use the property 
+			method, since a property method is defined
+			for all shorthand params as well.
+			*/
+
+			return module.func(inst);
+
+			/*
+			NOTE:						
+			Possible return values:
+		  -	No return value (undefined), 	
+		  -	Custom return value, e.g.:
+			module.func = function(param){
+				//do stuff
+				return true;
+			}
+		  -	For method chaining: return inst e.g.:
+			module.func = function(param){
+				//do stuff
+				return param; //param === inst
+			}
+			
+			IMPORTANT:
+			Do not do action method chaining if any 
+			of the actions (module.func) change the
+			value of a property via property method
+			(especially async code).
+			Note that for objects & arrays, changes
+			are made even via reference, e.g.
+				var a = { foo : "bar" }
+				b = a
+				b.foo = "foobar"
+				//will result in
+				a.foo === "foobar"
+			To avoid this, cloned values of the actual
+			method property values should be passed 
+			to the action method. That way it would
+			only alter it's own copy of each value.
+			Yet (deep) copying arrays and even more so
+			objects is difficult as well as resource
+			intensive, so it's not implemented for now.
+			*/
+		}
+		
+		//Set reference on to protoObj
+		ref[module.name] = protoObj[module.name];
+	}
+	else{ 
+		//Action method clash
+		throw new Error('Invalid module name.');
+	}
 };
