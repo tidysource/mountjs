@@ -269,20 +269,27 @@ m.module = function(module){
 	for (var i=0;i<module.param.length;++i){
 		var param = module.param[i];
 
-		//Validate param.type OR param.invalidType.
+		//Validate param.type OR param.invalidType
 		m.m.helper.validate({
 							val : param.invalidType,
-							type : ['undefined', 'string', 'array']
+							type : [
+									'undefined', 
+									'string', 
+									'array'
+									]
 							});
 		m.m.helper.validate({
 							val : param.type,
-							type : ['undefined', 'string', 'array']
+							type : [
+									'undefined', 
+									'string', 
+									'array'
+									]
 							});
 
-		//Conform param.type OR param.invalidType.
+		//Conform param.type OR param.invalidType
 		param.anyType = true;
 		if (typeof param.type !== 'undefined'){
-
 			param.type = m.m.helper.conform({ 
 											val : param.type, 
 											type : 'array' 
@@ -290,7 +297,6 @@ m.module = function(module){
 			param.anyType = false;
 		}
 		if (typeof param.invalidType !== 'undefined'){
-
 			param.invalidType = m.m.helper.conform({
 													val : param.invalidType, 
 													type : 'array' 
