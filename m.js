@@ -420,7 +420,25 @@ m.module = function(module){
 				inst.m.args = {};
 			}
 			
-			//<---Handle shorthand (validate and set shorthand, just use property methods)
+			//Validate, conform and set shorthand
+			m.m.helper.validate({
+								val : module.shorthand, 
+								type : ['undefined', 'string', 'array']
+								});
+								
+			if (typeof module.shorthand !== 'undefined'){
+				module.shorthand = m.m.helper.conform({
+														val : module.shorthand, 
+														type : 'array'
+														});
+														
+				for (var i=0;i<module.shorthand.length;++i){
+					var param = module.shorthand[i];
+					var val = arguments[i]
+					
+					inst[param](val);
+				}
+			}
 			 
 			/*
 			NOTE:
