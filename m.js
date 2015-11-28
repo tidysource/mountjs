@@ -311,7 +311,7 @@ m.module = function(module){
 		}
 		
 		//Conform param.auto
-		if (param.auto){
+		if (typeof param.auto !== 'undefined'){
 			//param.auto can be any type
 			if (param.conform === 'array'){
 				param.auto = m.m.helper.conform({
