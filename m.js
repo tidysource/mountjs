@@ -426,18 +426,16 @@ m.module = function(module){
 								type : ['undefined', 'string', 'array']
 								});
 								
-			if (typeof module.shorthand !== 'undefined'){
-				module.shorthand = m.m.helper.conform({
-														val : module.shorthand, 
-														type : 'array'
-														});
+			module.shorthand = m.m.helper.conform({
+													val : module.shorthand, 
+													type : 'array'
+													});
 														
-				for (var i=0;i<module.shorthand.length;++i){
-					var param = module.shorthand[i];
-					var val = arguments[i]
-					
-					inst[param](val);
-				}
+			for (var i=0;i<module.shorthand.length;++i){
+				var param = module.shorthand[i];
+				var val = arguments[i]
+				
+				inst[param](val);
 			}
 			 
 			/*
