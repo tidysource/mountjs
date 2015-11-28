@@ -211,20 +211,18 @@ m.module = function(module){
 	proto object).
 	*/
 	var ref = m;
-	var path = module.path.split('.');
-		//validate path <---- validate and conform path
-		if (path.indexOf('m') !== -1){
-			throw new Error('Invalid path.');
-		}
-	
-	for (var i=0;i<path.length;++i){
-		var prop = path[i];
-							
-		if (typeof ref[prop] === 'undefined'){
-			ref[prop] = {};
-		}
+	if (module.path !== ''){
+		var path = module.path.split('.');
 		
-		ref = ref[prop];
+		for (var i=0;i<path.length;++i){
+			var prop = path[i];
+								
+			if (typeof ref[prop] === 'undefined'){
+				ref[prop] = {};
+			}
+			
+			ref = ref[prop];
+		}	
 	}
 	
 	/*
