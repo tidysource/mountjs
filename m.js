@@ -322,7 +322,7 @@ m.module = function(module){
 		//Conform param.auto
 		if (param.auto){
 			//param.auto can be any type
-			if (param.conform){
+			if (param.conform === 'array'){
 				param.auto = m.m.helper.conform({
 													val : param.auto,
 													type : param.conform 
