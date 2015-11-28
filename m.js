@@ -26,7 +26,7 @@ m.module = function(module){
 	
 	var ref = m;
 	var path = module.path.split('.');
-		//validate path
+		//validate path <---- validate and conform path
 		if (path.indexOf('m') !== -1){
 			throw new Error('Invalid path.');
 		}
