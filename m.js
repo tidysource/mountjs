@@ -177,23 +177,18 @@ m.module = function(module){
 	
 	//Validate and conform module.path
 	m.m.helper.validate({val : module.path, type : 'string'});
-	if (typeof module.path === 'string'){
-		if (module.path[0] === '.'){
-			module.path = module.path.slice(1);
-		}
-		
-		//Validate path
-		if (/[^A-z0-9.]/.test(module.path)){
-			//Must be only letters, numbers and .
-			throw new Error('Invalid param: path');
-		}
-		else if (/^m/.test(module.path)
-			  || /\.m/.test(module.path)){
-			throw new Error('.m namespace is reserved.');
-		}
+	if (module.path[0] === '.'){
+		module.path = module.path.slice(1);
 	}
-	else if (typeof module.path !== 'undefined'){
+	
+	//Validate path
+	if (/[^A-z0-9.]/.test(module.path)){
+		//Must be only letters, numbers and .
 		throw new Error('Invalid param: path');
+	}
+	else if (/^m/.test(module.path)
+		  || /\.m/.test(module.path)){
+		throw new Error('.m namespace is reserved.');
 	}
 	
 	//Validate and conform module.param
