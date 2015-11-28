@@ -343,14 +343,10 @@ m.module = function(module){
 					
 					//Validate value to be set
 					if (typeof param.type !== 'undefined'){
-						for (var j=0;j<param.type.length;++j){
-							if (typeof param.type !== 'undefined'){
-								m.m.helper.validate({val : val, type : param.type});
-							}
-							else if (typeof param.invalidType !== 'undefined'){
-								m.m.helper.validate({val : val, type : param.invalidType});								
-							}
-						}
+						m.m.helper.validate({val : val, type : param.type});
+					}
+					else if (typeof param.invalidType !== 'undefined'){
+						m.m.helper.validate({val : val, type : param.invalidType});
 					}
 					
 					//Conform value 
