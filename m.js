@@ -169,13 +169,39 @@ m.module = function(module){
 	Validate and conform module
 	---------------------------
 	*/
+	//Validate module object
 	m.m.helper.validate({val : module, type : 'object'});
-	m.m.helper.validate({val : module.name, type : 'string'});
-	m.m.helper.validate({val : module.path, type : 'string'});
-	m.m.helper.validate({val : module.param, type : ['object','array']});
-	m.m.helper.validate({val : module.func, type : 'function'});
 	
+	//Validate module.name
+	m.m.helper.validate({val : module.name, type : 'string'});
+	
+	//Validate and conform module.path
+	m.m.helper.validate({val : module.path, type : 'string'});
+	if (typeof module.path === 'string'){
+		if (module.path[0] === '.'){
+			module.path = module.path.slice(1);
+		}
+		
+		//Validate path
+		if (/[^A-z0-9.]/.test(module.path)){
+			//Must be only letters, numbers and .
+			throw new Error('Invalid param: path');
+		}
+		else if (/^m/.test(module.path)
+			  || /\.m/.test(module.path)){
+			throw new Error('.m namespace is reserved.');
+		}
+	}
+	else if (typeof module.path !== 'undefined'){
+		throw new Error('Invalid param: path');
+	}
+	
+	//Validate and conform module.param
+	m.m.helper.validate({val : module.param, type : ['object','array']});
 	module.param = m.m.helper.conform({val : module.param, type : 'array'});
+
+	//Validate module.func
+	m.m.helper.validate({val : module.func, type : 'function'});
 	
 	/*
 	Build reference to specified path
