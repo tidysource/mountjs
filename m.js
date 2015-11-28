@@ -319,7 +319,16 @@ m.module = function(module){
 			}
 		}
 		
-		//<---check if default value conforms (if not try to conform it)
+		//Conform param.auto
+		if (param.auto){
+			//param.auto can be any type
+			if (param.conform){
+				param.auto = m.m.helper.conform({
+													val : param.auto,
+													type : param.conform 
+													})
+			}
+		}
 		
 		//Check for property method clash
 		if (typeof ref[param.name] === 'undefined'){
