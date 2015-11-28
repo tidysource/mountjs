@@ -122,7 +122,9 @@ m.module = function(module){
 					
 					NOTE:
 					A new instance is needed the first time 
-					a property method is called.
+					a property method is called. We need a
+					new (unique) instance to store property 
+					method values.
 					*/
 					if (typeof this.m.args === 'undefined'){
 						inst = Object.create(this);
@@ -167,7 +169,10 @@ m.module = function(module){
 			NOTE:
 			A new instance is needed the first time 
 			an action method is called and no property
-			method was called before it.
+			method was called before it.  We need a
+			new (unique) instance to store property 
+			method values. We need a new instance for every
+			action method call.
 			*/
 			if (typeof this.m.args === 'undefined'){
 				inst = Object.create(this);
